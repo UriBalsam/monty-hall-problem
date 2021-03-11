@@ -15,7 +15,7 @@ class Game(tk.Frame):
     """GUI application for Monty Hall game"""
     doors = ('a', 'b', 'c')
     def __init__(self, parent):
-        "initialize the frame"
+        '''initialize the frame'''
         super(Game, self).__init__(parent) #parent is the root window
         self.parent = parent
         self.img_file = 'all_closed.png'
@@ -27,13 +27,14 @@ class Game(tk.Frame):
     
     def create_widgets(self):
         '''Create label, button, and text widgets.'''
+
         # Create label to hold image of doors
         img = tk.PhotoImage(file='all_closed.png')
         self.photo_ibl = tk.Label(self.parent, image=img, 
                     text ='', borderwidth=0)
         self.photo_ibl.image = img
 
-        #instructions label
+        # Instructions label
         instr_input = [
             ('Behind one door is CASH!', 1, 0, 5, 'W'),
             ('Behind the others: A GOAT!!!', 2, 0, 5, 'W'),
@@ -43,4 +44,29 @@ class Game(tk.Frame):
         for text, row, column, columnspan, sticky in instr_input:
             instr_ibl = tk.Label(self.parent, text=text)
             instr_ibl.grid(row=row, column=column, columnspan=columnspan, sticky=sticky, ipadx=30)
-            
+
+        # Create Radio Buttons and Text Widgets
+        self.door_choice = tk.StringVar()
+        self.door_choice.set(None)
+
+        a = tk.Radiobutton(self.parent, text = 'A', variable=self.door_choice,
+                value='a', command=self.win_reveal)
+        b = tk.Radiobutton(self.parent, text = 'B', variable=self.door_choice,
+                value='b', command=self.win_reveal) 
+        c = tk.Radiobutton(self.parent, text = 'C', variable=self.door_choice,
+                value='c', command=self.win_reveal)               
+
+        # Widget for switching door choice
+        self.change_door = tk.StringVar()
+        self.change_door.set(None)
+        
+        instr_ibl = tk.Label(self.parent, text = 'Switch door choice?')
+        instr_ibl.grid(row=2, column=3, columnspan=1, sticky='E')
+
+        self.yes = tk.Radiobutton(self.parent, state= 'disabled', text = 'Y',
+                        variable=self.change_door, value = 'y',
+                        command=self.show_final) 
+        self.no = tk.Radiobutton(self.parent, state= 'disabled', text = 'N',
+                        variable=self.change_door, value = 'n',
+                        command=self.show_final) 
+    
