@@ -69,4 +69,13 @@ class Game(tk.Frame):
         self.no = tk.Radiobutton(self.parent, state= 'disabled', text = 'N',
                         variable=self.change_door, value = 'n',
                         command=self.show_final) 
-    
+
+        # Widget for win statistics
+        defaultbg = self.parent.cget('bg')
+        self.unchanged_wins_txt = tk.Text(self.parent, width=20, 
+                        height=1, wrap=tk.WORD, 
+                        bg=defaultbg, fg='black',
+                        borderwidth=0)
+        self.changed_wins_txt = tk.Text(self.parent, width=20,
+                        height=1, wrap=tk.WORD, bg=defaultbg,
+                        fg='black', borderwidth=0)
