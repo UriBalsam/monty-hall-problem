@@ -88,4 +88,37 @@ class Game(tk.Frame):
         self.unchanged_wins_txt.grid(row=1, column=5, columnspan=5)
         self.changed_wins_txt.grid(row=2, column=5, columnspan=5)
 
-        
+    def update_image(self):
+        '''Updating the door image '''
+        img = tk.PhotoImage(file=self.img_file)
+        self.photo_ibl.configure(image=img)
+        self.photo_ibl.image - img
+
+    def win_reveal(self):
+        '''Pick a winner and reveal one of the doors'''
+        door_list = list(self.doors)
+        self.choice = self.door_choice.get()
+        self.winner = random.choice(door_list)
+
+        door_list.remove(self.winner)
+
+        if self.choice in door_list:
+            door_list.remove(self.choice)
+            self.reveal = door_list[0]
+        else:
+            self.reveal = random.choice(door_list)
+
+
+        self.img_file = ('reveal_{}.png'.format(self.reveal))
+        self.update_image()
+
+        # turn on and yes/no buttons
+
+        self.yes.config(state='normal')
+        self.no.config(state='normal') 
+        self.change_door.set(None)
+
+        #close door 
+
+        self.img_file = 'all_closed.png'
+        self.parent.after(2000, self.update_image)
